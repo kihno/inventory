@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema(
+const GameSchema = new Schema(
     {
         name: { type: String, required: true, maxLength: 100 },
         description: { type: String, required: true },
         price: { type: Number, required: true },
-        category: [{ type: Schema.Types.ObjectId, ref: 'Category'}],
+        genre: [{ type: Schema.Types.ObjectId, ref: 'Genre'}],
         stock: { type: Number },
-        image: { data: Buffer, contentType: String}
+        imageURL: { type: String }
     }
 );
 
-ItemSchema.virtual('url').get(function () {
-    return `/catalog/book/${this._id}`;
+GameSchema.virtual('url').get(function () {
+    return `/catalog/game/${this._id}`;
 });
 
-module.exports = mongoose.model('Item', ItemSchema);
+module.exports = mongoose.model('Game', GameSchema);

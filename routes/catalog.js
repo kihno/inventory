@@ -2,44 +2,44 @@ const express = require('express');
 const router = express.Router();
 
 //Route Controllers
-const category_controller = require('../controllers/categoryController');
-const item_controller = require('../controllers/itemController');
+const genre_controller = require('../controllers/genreController');
+const game_controller = require('../controllers/gameController');
 
 
-//Item Routes
-router.get('/', item_controller.index);
+//Game Routes
+router.get('/', game_controller.index);
 
-router.get('/item/create', item_controller.item_create_get);
+router.get('/game/create', game_controller.game_create_get);
 
-router.post('/item/create', item_controller.item_create_post);
+router.post('/game/create', game_controller.game_create_post);
 
-router.get('/item/:id/delete', item_controller.item_delete_get);
+router.get('/game/:id/delete', game_controller.game_delete_get);
 
-router.post('/item/:id/delete', item_controller.item_delete_post);
+router.post('/game/:id/delete', game_controller.game_delete_post);
 
-router.get('/item/:id/update', item_controller.item_update_get);
+router.get('/game/:id/update', game_controller.game_update_get);
 
-router.post('/item/:id/update', item_controller.item_update_post);
+router.post('/game/:id/update', game_controller.game_update_post);
 
-router.get('/item/:id', item_controller.item_detail);
+router.get('/game/:id', game_controller.game_detail);
 
-router.get('/items', item_controller.item_list);
+router.get('/games', game_controller.game_list);
 
-//Catelog Routes
-router.get('/category/create', category_controller.category_create_get);
+//Genre Routes
+router.get('/genre/create', genre_controller.genre_create_get);
 
-router.post('/category/create', category_controller.category_create_post);
+router.post('/genre/create', genre_controller.genre_create_post);
 
-router.get('/category/:id/delete', category_controller.category_delete_get);
+router.get('/genre/:id/delete', genre_controller.genre_delete_get);
 
-router.post('/category/:id/delete', category_controller.category_delete_post);
+router.post('/genre/:id/delete', genre_controller.genre_delete_post);
 
-router.get('/category/:id/update', category_controller.category_update_get);
+router.get('/genre/:id/update', genre_controller.genre_update_get);
 
-router.post('/category/:id/update', category_controller.category_update_post);
+router.post('/genre/:id/update', genre_controller.genre_update_post);
 
-router.get('/category/:id', category_controller.category_detail);
+router.get('/genre/:id', genre_controller.genre_detail);
 
-router.get('/categorys', category_controller.category_list);
+router.get('/genres', genre_controller.genre_list);
 
 module.exports = router;
