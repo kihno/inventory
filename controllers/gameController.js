@@ -36,7 +36,7 @@ exports.game_list = (req, res, next) => {
 
 exports.game_detail = (req, res, next) => {
     Game.findById(req.params.id)
-    .populate()
+    .populate('genre')
     .exec(function (err, results) {
         if (err) { return next(err) }
 

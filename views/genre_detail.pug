@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+
+    h1 Genre: #{genre.name} 
+
+    .genreGames 
+
+        h4 Games 
+
+        div.genreGames
+            each game in genre_games 
+                div.genreGame
+                    img(src=game.image)
+                    a(href=game.url) #{game.name}
+
+            else 
+                p There are no games in this genre yet.
