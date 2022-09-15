@@ -23,8 +23,15 @@ exports.index = (req, res) => {
     );
 };
 
-exports.game_list = (req, res) => {
-    res.send('NOT IMPLEMENTED: game List');
+exports.game_list = (req, res, next) => {
+    Game.find({}, )
+    .sort({ name:1 })
+    .populate()
+    .exec(function (err, list_games) {
+        if (err) { return next(err) }
+
+        res.render('game_list', { title: "Game List", game_list: list_games});
+    });
 };
 
 exports.game_detail = (req, res) => {

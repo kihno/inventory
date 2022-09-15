@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+
+    h1= title
+
+    div.gameList
+        each game in game_list 
+            div.game
+                img(src=game.image)
+                div.gameName 
+                    a(href=game.url) #{game.name}
+                div.gameDesc #{game.description}
+                div.gamePrice #{game.price}
+
+        else 
+            p There are no games available.
