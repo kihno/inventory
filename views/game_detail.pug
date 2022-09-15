@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+
+    img(href=game.image)
+    
+    h1= title
+    p #{game.genre}
+        //- each val, index in game.genre 
+        //-     a(href=val.url) #{val.name}
+        //-     if index < game.genre.length - 1
+        //-     |,
+
+    p #{game.description}
+
+    p Stock: #{game.stock}
+    p #[strong Price:] #{game.price}
+

@@ -34,8 +34,20 @@ exports.game_list = (req, res, next) => {
     });
 };
 
-exports.game_detail = (req, res) => {
-    res.send('NOT IMPLEMENTED: game Detail');
+exports.game_detail = (req, res, next) => {
+    Game.findById(req.params.id)
+    .populate()
+    .exec(function (err, results) {
+        if (err) { return next(err) }
+
+        if (results == null) {
+            const error = new Error('Game not found.');
+            error.status = 404;
+            return next(err);
+        }
+
+        res.render('game_detail', { title: results.name, game: results });
+    });
 };
 
 exports.game_create_get = (req, res) => {
