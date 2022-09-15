@@ -155,11 +155,23 @@ exports.game_create_post = [
 ];
 
 exports.game_delete_get = (req, res) => {
-    res.send('NOT IMPLEMENTED: game delete GET');
+    Game.findById(req.params.id).exec((err, results) => {
+        if (err) { return next(err) }
+
+        if (results == null) {
+            res.redirect('/catalog/games');
+        }
+
+        res.render('game_delete', { title: 'Delete Game', game: results });
+    });
 };
 
 exports.game_delete_post = (req, res) => {
-    res.send('NOT IMPLEMENTED: game delete POST');
+    Game.findByIdAndRemove(req.body.gameid, (err) => {
+        if (err) { return next(err) }
+
+        res.redirect('/catalog/games');
+    });
 };
 
 exports.game_update_get = (req, res) => {
