@@ -60,20 +60,21 @@ function genreCreate(name, cb) {
   }   );
 }
 
-function gameCreate(name, description, price, genre, imageURL, cb) {
+function gameCreate(name, description, price, genre, stock, image, cb) {
     gamedetail = {
         name: name,
         description: description,
         price: price,
         genre: genre,
-        imageURL: imageURL,
+        stock: stock,
+        image: image,
     }
 
     var game = new Game(gamedetail);
     game.save(function (err) {
         if (err) {
             cb(err, null)
-            regurn
+            return
         }
         console.log('New Game: ' + game);
         games.push(game);
@@ -126,18 +127,24 @@ function bookInstanceCreate(book, imprint, due_back, status, cb) {
 
 function createGenres(cb) {
     async.series([
-        function(callback) {
-            genreCreate("RPG", callback);
-        },
-        function(callback) {
-            genreCreate("Shooter", callback);
-        },
-        function(callback) {
-            genreCreate("Racing", callback);
-        },
-        function(callback) {
-            genreCreate("Platformer", callback);
-        },
+      function(callback) {
+          genreCreate("RPG", callback);
+      },
+      function(callback) {
+          genreCreate("Shooter", callback);
+      },
+      function(callback) {
+          genreCreate("Racing", callback);
+      },
+      function(callback) {
+          genreCreate("Platformer", callback);
+      },
+      function(callback) {
+        genreCreate("Fighting", callback);
+      },
+      function(callback) {
+        genreCreate("Sports", callback);
+      },
     ],
     cb);
 }
@@ -145,146 +152,44 @@ function createGenres(cb) {
 function createGames(cb) {
     async.series([
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './uploads/super-mario-64.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('The Legend of Zelda: Ocarina of Time', "A 3D reimagining of the core premise of The Legend of Zelda: A Link to the Past (1991), Ocarina of Time follows Link, the protagonist, as he picks up a sword and leaves behind his humble origins in order to trek across the land of Hyrule, venture into its treacherous dungeons and travel through time itself to fulfill his destiny as the Hero of Time by defeating his enemy Ganondorf and ridding Hyrule of evil.", 49.99, [genres[0]], 1, './uploads/legend-of-zelda.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('GoldenEye 007', "GoldenEye 007 is a first-person shooter video game developed by Rare and based on the 1995 James Bond film GoldenEye. It was exclusively released for the Nintendo 64 video game console in August 1997.", 49.99, [genres[1]], 7, './uploads/goldeneye.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Star Fox 64', "The update to the 16-bit Super NES title continues the original's on-rails 3D shooting action on the Nintendo 64. Starring Fox McCloud, Peppy Hare, Falco Lombardi, and Slippy Toad, this new 64-bit version contains 15 plus levels, easy, medium, and difficult paths, forward-scrolling levels as well as full 3D realms, and a three-part multiplayer mode using a four-player split screen. In addition to plenty of Arwing action, the game introduces a new hover tank and even features a submarine level. ", 49.99, [genres[1]], 10, './uploads/starfox.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Mario Kart 64', "Mario Kart 64 is the second main installment of the Mario Kart series. It is the first game in the series to use three-dimensional graphics, however, the characters and items in this game are still two-dimensional, pre-rendered sprites. The game offers two camera angles and three engine sizes: 50cc, 100cc and 150cc. Each kart has distinctive handling, acceleration and top speed capabilities. Shells that you fire at rival racers, Bananas that make them skid out and Lightning Bolts that make them small and very slow are just a few of the game's unique power-ups.", 49.99, [genres[2]], 3, './uploads/mario-kart-64.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Super Smash Bros.', "Super Smash Bros. is a crossover fighting video game between several different Nintendo franchises, and the first installment in the Super Smash Bros. series. Players must defeat their opponents multiple times in a fighting frenzy of items and power-ups. Super Smash Bros. is a departure from the general genre of fighting games: instead of depleting an opponent's life bar, the players seek to knock opposing characters off a stage. Each player has a damage total, represented by a percentage, which rises as the damage is taken.", 49.99, [genres[4]], 18, './uploads/super-smash-bros.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('NFL Blitz', "NFL Blitz takes the idea of a normal football video game and turns it on its head with fewer players, bigger hits, and lots of personality.", 49.99, [genres[5]], 324, './uploads/nfl-blitz.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('F-Zero X', "It's you against 29 other machines competing for the title of F-Zero X Champion. You're racing at speeds of over 1,000 km/h high above the atmosphere. Your competition comes from every corner of the galaxy and won't shed a tear at the thought of smashing you off the track. With four-player simultaneous gameplay and the Rumble Pak accessory, you have the fastest racing game on the N64 system!", 49.99, [genres[2]], 12, './uploads/f-zero.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Turok: Dinosaur Hunter', "A world where time has no meaning - and evil knows no bounds. Torn from a world long gone, the time traveling warrior Turok has found himself thrust into a savage land torn by conflict.", 49.99, [genres[1]], 0, './uploads/turok.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Star Wars: Shadows of the Empire', "As Luke Skywalker and the Rebel Alliance struggle to defeat Darth Vader and the Empire, a new threat arises. Dark Prince Xizor aspires to take Darth Vader's place at the Emperor's side. As Dash Rendar, it's up to you to protect Luke and help the Alliance. May the Force be with you!", 49.99, [genres[1], genres[3]], 9, './uploads/shadows-of-the-empire.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate('Doom 64', "You killed the Demons once, they were all dead. Or so you thought... A single Demon Entity escaped detection. Systematically it altered decaying, dead carnage back into grotesque living tissue. The Demons have returned - stronger and more vicious than ever before. You mission is clear, there are no options: kill or be killed!", 49.99, [genres[1]], 666, './uploads/doom-64.png', callback);
         },
         function(callback) {
-            gameCreate('Super Mario 64', "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.", 49.99, [genres[3]], 64, './public/images/super-mario-64.png', callback);
+            gameCreate("Tom Clancy's Rainbow Six", "The most revolutionary action/strategy game of its kind. Nothing comes closer to offering an exciting combination of strategy, team-building, realistic three-dimensional graphics and true-to-life special forces action. The ultimate goal is to save yourself and the world from deadly terrorists. You must successfully complete 17 unique missions. If you die, the game isn't over. The World is.", 49.99, [genres[1]], 6, './uploads/rainbow-six.png', callback);
         },
-    ]);
+    ],
+    cb);
 }
-
-
-function createGenreAuthors(cb) {
-    async.series([
-        function(callback) {
-          authorCreate('Patrick', 'Rothfuss', '1973-06-06', false, callback);
-        },
-        function(callback) {
-          authorCreate('Ben', 'Bova', '1932-11-8', false, callback);
-        },
-        function(callback) {
-          authorCreate('Isaac', 'Asimov', '1920-01-02', '1992-04-06', callback);
-        },
-        function(callback) {
-          authorCreate('Bob', 'Billings', false, false, callback);
-        },
-        function(callback) {
-          authorCreate('Jim', 'Jones', '1971-12-16', false, callback);
-        },
-        function(callback) {
-          genreCreate("Fantasy", callback);
-        },
-        function(callback) {
-          genreCreate("Science Fiction", callback);
-        },
-        function(callback) {
-          genreCreate("French Poetry", callback);
-        },
-        ],
-        // optional callback
-        cb);
-}
-
-
-function createBooks(cb) {
-    async.parallel([
-        function(callback) {
-          bookCreate('The Name of the Wind (The Kingkiller Chronicle, #1)', 'I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life. I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep.', '9781473211896', authors[0], [genres[0],], callback);
-        },
-        function(callback) {
-          bookCreate("The Wise Man's Fear (The Kingkiller Chronicle, #2)", 'Picking up the tale of Kvothe Kingkiller once again, we follow him into exile, into political intrigue, courtship, adventure, love and magic... and further along the path that has turned Kvothe, the mightiest magician of his age, a legend in his own time, into Kote, the unassuming pub landlord.', '9788401352836', authors[0], [genres[0],], callback);
-        },
-        function(callback) {
-          bookCreate("The Slow Regard of Silent Things (Kingkiller Chronicle)", 'Deep below the University, there is a dark place. Few people know of it: a broken web of ancient passageways and abandoned rooms. A young woman lives there, tucked among the sprawling tunnels of the Underthing, snug in the heart of this forgotten place.', '9780756411336', authors[0], [genres[0],], callback);
-        },
-        function(callback) {
-          bookCreate("Apes and Angels", "Humankind headed out to the stars not for conquest, nor exploration, nor even for curiosity. Humans went to the stars in a desperate crusade to save intelligent life wherever they found it. A wave of death is spreading through the Milky Way galaxy, an expanding sphere of lethal gamma ...", '9780765379528', authors[1], [genres[1],], callback);
-        },
-        function(callback) {
-          bookCreate("Death Wave","In Ben Bova's previous novel New Earth, Jordan Kell led the first human mission beyond the solar system. They discovered the ruins of an ancient alien civilization. But one alien AI survived, and it revealed to Jordan Kell that an explosion in the black hole at the heart of the Milky Way galaxy has created a wave of deadly radiation, expanding out from the core toward Earth. Unless the human race acts to save itself, all life on Earth will be wiped out...", '9780765379504', authors[1], [genres[1],], callback);
-        },
-        function(callback) {
-          bookCreate('Test Book 1', 'Summary of test book 1', 'ISBN111111', authors[4], [genres[0],genres[1]], callback);
-        },
-        function(callback) {
-          bookCreate('Test Book 2', 'Summary of test book 2', 'ISBN222222', authors[4], false, callback)
-        }
-        ],
-        // optional callback
-        cb);
-}
-
-
-function createBookInstances(cb) {
-    async.parallel([
-        function(callback) {
-          bookInstanceCreate(books[0], 'London Gollancz, 2014.', false, 'Available', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[1], ' Gollancz, 2011.', false, 'Loaned', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[2], ' Gollancz, 2015.', false, false, callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[3], 'New York Tom Doherty Associates, 2016.', false, 'Available', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[3], 'New York Tom Doherty Associates, 2016.', false, 'Available', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[3], 'New York Tom Doherty Associates, 2016.', false, 'Available', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[4], 'New York, NY Tom Doherty Associates, LLC, 2015.', false, 'Available', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[4], 'New York, NY Tom Doherty Associates, LLC, 2015.', false, 'Maintenance', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[4], 'New York, NY Tom Doherty Associates, LLC, 2015.', false, 'Loaned', callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[0], 'Imprint XXX2', false, false, callback)
-        },
-        function(callback) {
-          bookInstanceCreate(books[1], 'Imprint XXX3', false, false, callback)
-        }
-        ],
-        // Optional callback
-        cb);
-}
-
 
 
 async.series([
@@ -297,12 +202,9 @@ function(err, results) {
         console.log('FINAL ERR: '+err);
     }
     else {
-        console.log('Games: '+bookinstances);
+        console.log('Games: '+games);
         
     }
     // All done, disconnect from database
     mongoose.connection.close();
 });
-
-
-

@@ -1,7 +1,26 @@
 const Game = require('../models/game');
+const Genre = require('../models/genre');
+
+const async = require('async');
 
 exports.index = (req, res) => {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+    async.parallel(
+        {
+            genre_count(callback) {
+                Genre.countDocuments({}, callback);
+            },
+            game_count(callback) {
+                Game.countDocuments({}, callback);
+            },
+        },
+        (err, results) => {
+            res.render('index', {
+                title: 'N64 Store',
+                error: err,
+                data: results,
+            });
+        }
+    );
 };
 
 exports.game_list = (req, res) => {
