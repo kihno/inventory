@@ -10,7 +10,8 @@ block content
             input#title.input(type='text', placeholder='Name of Game', name='name' required='true' value=(undefined===game ? '' : game.name))
         .form 
             label(for='summary') Summary: 
-            textarea#title.input(placeholder='Summary of Game', name='summary' required='true' value=(undefined===game ? '' : game.summary))
+            - const value = (undefined===game ? '' : game.summary)
+            textarea#title.input(placeholder='Summary of Game', name='summary' required='true') #{value}
         .form 
             label Genre: 
             div 
@@ -26,7 +27,7 @@ block content
             input#title.input(type='number', placeholder='Number of copies in stock', name='stock' required='true' value=(undefined===game ? '' : game.stock))
         .form 
             label(for='image') Image: 
-            input(type='text' name='image' placehodler='URL of image' value='')
+            input(type='text' name='image' placehodler='URL of image' value=(undefined===game ? '' : game.image))
         button.submit(type='submit') Submit 
 
     if errors 
