@@ -1,31 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './uploads/')
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.filename)
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    } else {
-        cb(new Error('Please upload jpg or png image.'), false);
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    limits: {
-        filesize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter,
-});
 
 //Route Controllers
 const genre_controller = require('../controllers/genreController');
@@ -37,7 +12,7 @@ router.get('/', game_controller.index);
 
 router.get('/game/create', game_controller.game_create_get);
 
-router.post('/game/create', upload.single('image'), game_controller.game_create_post);
+router.post('/game/create', game_controller.game_create_post);
 
 router.get('/game/:id/delete', game_controller.game_delete_get);
 
