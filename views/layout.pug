@@ -10,17 +10,21 @@ html(lang='en')
       block navbar 
         ul.navLinks 
           li 
-            a(href='/catalog') Home 
-          li 
-            a(href='/catalog/genres') All Genres 
+            a(href='/catalog') Home  
           li 
             a(href='/catalog/games') All Games 
-          li
-            hr
           li 
-            a(href='/catalog/genre/create') Add New Genre 
+            a(href='/catalog/developers') All Developers
+          li 
+            a(href='/catalog/genres') All Genres
+          li
+            hr 
           li 
             a(href='/catalog/game/create') Add New Game 
+          li 
+            a(href='/catalog/developer/create') Add New Developer
+          li 
+            a(href='/catalog/genre/create') Add New Genre
 
     div.content
       block content

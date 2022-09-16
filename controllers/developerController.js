@@ -40,34 +40,45 @@ exports.developer_detail = (req, res, next) => {
 };
 
 exports.developer_create_get = (req, res) => {
-    res.render('genre_form', { title: 'Create Genre' });
+    res.render('developer_form', { title: 'Add New Developer' });
 };
 
 exports.developer_create_post = [
-    body('name', 'Genre name required')
+    body('name', 'Developer name required.')
     .trim() 
+    .isLength({ min:1 })
+    .escape(),
+
+    body('country', 'Developer country is required.')
+    .trim()
     .isLength({ min:1 })
     .escape(),
 
     (req, res, next) => {
         const errors = validationResult(req);
 
-        const genre = new Genre({ name: req.body.name });
+        const developer = new Developer(
+            {
+                name: req.body.name,
+                country: req.body.country,
+                image: req.body.image,
+            }
+        );
 
         if (!errors.isEmpty()) {
-            res.render('genre_form', { title: 'Create Genre', genre, errors: errors.array() });
+            res.render('developer_form', { title: 'Create Developer', developer, errors: errors.array() });
             return;
         } else {
-            Genre.findOne({ name: req.body.name }).exec((err, found_genre) => {
+            Developer.findOne({ name: req.body.name }).exec((err, found_developer) => {
                 if (err) { return next(err) }
 
-                if (found_genre) {
-                    res.redirect(found_genre.url);
+                if (found_developer) {
+                    res.redirect(found_developer.url);
                 } else {
-                    genre.save((err) => {
+                    Developer.save((err) => {
                         if (err) { return next(err) }
 
-                        res.redirect(genre.url);
+                        res.redirect(developer.url);
                     });
                 }
             });
@@ -78,21 +89,21 @@ exports.developer_create_post = [
 exports.developer_delete_get = (req, res, next) => {
     async.parallel(
         {
-            genre(callback) {
-                Genre.findById(req.params.id).exec(callback);
+            developer(callback) {
+                Developer.findById(req.params.id).exec(callback);
             },
-            genre_games(callback) {
-                Game.find({ genre: req.params.id }).exec(callback);
+            developer_games(callback) {
+                Game.find({ developer: req.params.id }).exec(callback);
             },
         },
         (err, results) => {
             if (err) { return next(err) }
 
-            if (results.genre == null) {
-                res.redirect('/catalog/genres');
+            if (results.developer == null) {
+                res.redirect('/catalog/developers');
             }
 
-            res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_games: results.genre_games })
+            res.render('developer_delete', { title: 'Delete Developer', developer: results.developer, developer_games: results.developer_games })
         }
     );
 };
@@ -100,64 +111,76 @@ exports.developer_delete_get = (req, res, next) => {
 exports.developer_delete_post = (req, res, next) => {
     async.parallel(
         {
-            genre(callback) {
-                Genre.findById(req.body.genreid).exec(callback);
+            developer(callback) {
+                Developer.findById(req.body.developerid).exec(callback);
             },
-            genres_games(callback) {
-                Game.find({ genre: req.body.genreid }).exec(callback);
+            developers_games(callback) {
+                Game.find({ developer: req.body.developerid }).exec(callback);
             },
         },
         (err, results) => {
             if (err) { return next(err) }
 
-            if(results.genres_games.length > 0) {
-                res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genres_books });
+            if(results.developers_games.length > 0) {
+                res.render('developer_delete', { title: 'Delete Developer', developer: results.developer, developer_books: results.developers_books });
                 return;
             }
 
-            Genre.findByIdAndRemove(req.body.genreid, (err) => {
+            Developer.findByIdAndRemove(req.body.developerid, (err) => {
                 if (err) { return next(err) }
         
-                res.redirect('/catalog/genres');
+                res.redirect('/catalog/developers');
             });
         }
     );
 };
 
 exports.developer_update_get = (req, res, next) => {
-    Genre.findById(req.params.id).exec((err, genre) => {
+    Developer.findById(req.params.id).exec((err, developer) => {
         if (err) { return next(err) }
 
-        if (genre == null) {
-            const err = new Error('Genre not found.');
+        if (developer == null) {
+            const err = new Error('Developer not found.');
             err.status = 404;
             return next(err);
         }
 
-        res.render('genre_form', { title: 'Update Genre', genre });
+        res.render('developer_form', { title: 'Update Developer', developer });
     });
 };
 
 exports.developer_update_post = [
-    body('name', 'Genre name required')
+    body('name', 'Developer name required')
     .trim() 
+    .isLength({ min:1 })
+    .escape(),
+
+    body('country', 'Developer country is required.')
+    .trim()
     .isLength({ min:1 })
     .escape(),
 
     (req, res, next) => {
         const errors = validationResult(req);
 
-        const genre = new Genre({ name: req.body.name, _id: req.params.id });
+        const developer = new Developer(
+            {
+                name: req.body.name,
+                country: req.body.country,
+                image: req.body.image,
+                _id: req.params.id 
+            }
+        );
 
         if (!errors.isEmpty()) {
-            res.render('genre_form', { title: 'Update Genre', genre, errors: errors.array() });
+            res.render('developer_form', { title: 'Update Developer', developer, errors: errors.array() });
             return;
         } 
 
-        Genre.findByIdAndUpdate(req.params.id, genre, {}, (err, thegenre) => {
+        Developer.findByIdAndUpdate(req.params.id, developer, {}, (err, thedeveloper) => {
             if (err) { return next(err) }
 
-            res.redirect(thegenre.url);
+            res.redirect(thedeveloper.url);
         });
     }
 ];
