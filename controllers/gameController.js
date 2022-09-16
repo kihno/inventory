@@ -31,7 +31,7 @@ const { body, validationResult } = require('express-validator');
 //     fileFilter: fileFilter,
 // });
 
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
     async.parallel(
         {
             genre_count(callback) {
@@ -152,7 +152,7 @@ exports.game_create_post = [
     }
 ];
 
-exports.game_delete_get = (req, res) => {
+exports.game_delete_get = (req, res, next) => {
     Game.findById(req.params.id).exec((err, results) => {
         if (err) { return next(err) }
 
@@ -164,7 +164,7 @@ exports.game_delete_get = (req, res) => {
     });
 };
 
-exports.game_delete_post = (req, res) => {
+exports.game_delete_post = (req, res, next) => {
     Game.findByIdAndRemove(req.body.gameid, (err) => {
         if (err) { return next(err) }
 

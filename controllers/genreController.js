@@ -75,18 +75,59 @@ exports.genre_create_post = [
     }
 ];
 
-exports.genre_delete_get = (req, res) => {
-    res.send('NOT IMPLEMENTED: Genre delete GET');
+exports.genre_delete_get = (req, res, next) => {
+    async.parallel(
+        {
+            genre(callback) {
+                Genre.findById(req.params.id).exec(callback);
+            },
+            genre_games(callback) {
+                Game.find({ genre: req.params.id }).exec(callback);
+            },
+        },
+        (err, results) => {
+            if (err) { return next(err) }
+
+            if (results.genre == null) {
+                res.redirect('/catalog/genres');
+            }
+
+            res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_games: results.genre_games })
+        }
+    );
 };
 
-exports.genre_delete_post = (req, res) => {
-    res.send('NOT IMPLEMENTED: Genre delete POST');
+exports.genre_delete_post = (req, res, next) => {
+    async.parallel(
+        {
+            genre(callback) {
+                Genre.findById(req.body.genreid).exec(callback);
+            },
+            genres_games(callback) {
+                Game.find({ genre: req.body.genreid }).exec(callback);
+            },
+        },
+        (err, results) => {
+            if (err) { return next(err) }
+
+            if(results.genres_games.length > 0) {
+                res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genres_books });
+                return;
+            }
+
+            Genre.findByIdAndRemove(req.body.genreid, (err) => {
+                if (err) { return next(err) }
+        
+                res.redirect('/catalog/genres');
+            });
+        }
+    );
 };
 
-exports.genre_update_get = (req, res) => {
+exports.genre_update_get = (req, res, next) => {
     res.send('NOT IMPLEMENTED: Genre update GET');
 };
 
-exports.genre_update_post = (req, res) => {
+exports.genre_update_post = (req, res, next) => {
     res.send('NOT IMPLEMENTED: Genre update POST');
 };

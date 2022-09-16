@@ -14,5 +14,11 @@ block content
                     img(src=game.image)
                     a(href=game.url) #{game.name}
 
-            else 
+            else
                 p There are no games in this genre yet.
+
+    hr
+    p 
+        a(href=genre.url+'/update') Update Genre
+    p 
+        a(href=genre.url+'/delete') Delete Genre
