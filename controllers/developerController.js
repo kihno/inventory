@@ -1,48 +1,49 @@
+const Developer = require('../models/developer');
 const Genre = require('../models/genre');
 const Game = require('../models/game');
 
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 
-exports.genre_list = (req, res) => {
-    Genre.find({}, )
+exports.developer_list = (req, res) => {
+    Developer.find({}, )
     .sort({ name:1 })
-    .exec(function (err, list_genres) {
+    .exec(function (err, list_developers) {
         if (err) { return next(err) }
 
-        res.render('genre_list', { title: "Genres", genre_list: list_genres});
+        res.render('developer_list', { title: "Developers", developer_list: list_developers});
     });
 };
 
-exports.genre_detail = (req, res, next) => {
+exports.developer_detail = (req, res, next) => {
     async.parallel(
         {
-            genre(callback) {
-                Genre.findById(req.params.id).exec(callback);
+            developer(callback) {
+                Developer.findById(req.params.id).exec(callback);
             },
-            genre_games(callback) {
-                Game.find({ genre: req.params.id }).exec(callback);
+            developers_games(callback) {
+                Game.find({ developer: req.params.id }).exec(callback);
             },
         },
         (err, results) => {
             if (err) { return next(err) }
 
-            if (results.genre == null) {
-                const err = new Error('Genre not found.');
+            if (results.developer == null) {
+                const err = new Error('Developer not found.');
                 err.status = 404;
                 return next(err);
             }
 
-            res.render('genre_detail', { title: 'Genre Detail', genre: results.genre, genre_games: results.genre_games });
+            res.render('developer_detail', { title: 'Developer Detail', developer: results.developer, developer_games: results.developers_games });
         }
     );
 };
 
-exports.genre_create_get = (req, res) => {
+exports.developer_create_get = (req, res) => {
     res.render('genre_form', { title: 'Create Genre' });
 };
 
-exports.genre_create_post = [
+exports.developer_create_post = [
     body('name', 'Genre name required')
     .trim() 
     .isLength({ min:1 })
@@ -74,7 +75,7 @@ exports.genre_create_post = [
     }
 ];
 
-exports.genre_delete_get = (req, res, next) => {
+exports.developer_delete_get = (req, res, next) => {
     async.parallel(
         {
             genre(callback) {
@@ -96,7 +97,7 @@ exports.genre_delete_get = (req, res, next) => {
     );
 };
 
-exports.genre_delete_post = (req, res, next) => {
+exports.developer_delete_post = (req, res, next) => {
     async.parallel(
         {
             genre(callback) {
@@ -123,7 +124,7 @@ exports.genre_delete_post = (req, res, next) => {
     );
 };
 
-exports.genre_update_get = (req, res, next) => {
+exports.developer_update_get = (req, res, next) => {
     Genre.findById(req.params.id).exec((err, genre) => {
         if (err) { return next(err) }
 
@@ -137,7 +138,7 @@ exports.genre_update_get = (req, res, next) => {
     });
 };
 
-exports.genre_update_post = [
+exports.developer_update_post = [
     body('name', 'Genre name required')
     .trim() 
     .isLength({ min:1 })
