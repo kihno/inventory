@@ -1,4 +1,5 @@
 const Game = require('../models/game');
+const Developer = require('../models/developer');
 const Genre = require('../models/genre');
 
 const async = require('async');
@@ -84,11 +85,21 @@ exports.game_detail = (req, res, next) => {
 };
 
 exports.game_create_get = (req, res, next) => {
-    Genre.find((err, genres) => {
-        if (err) { return next(err) }
+    async.parallel(
+        {
+            genres(callback) {
+                Genre.find(callback);
+            },
+            developers(callback) {
+                Developer.find(callback);
+            }
+        },
+        (err, results) => {
+            if (err) { return next(err) }
 
-        res.render('game_form', { title: 'Add Game', genres: genres})
-    });
+            res.render('game_form', { title: 'Add Game', genres: results.genres, developers: results.developers });
+        }
+    );
 };
 
 exports.game_create_post = [
@@ -119,6 +130,8 @@ exports.game_create_post = [
     .isLength({ min:1 })
     .escape(),
 
+    body('genre.*').escape(),
+
     (req, res, next) => {
         const errors = validationResult(req);
 
@@ -126,6 +139,7 @@ exports.game_create_post = [
         const game = new Game(
             {
                 name: req.body.name,
+                developer: req.body.developer,
                 summary: req.body.summary,
                 genre: req.body.genre,
                 stock: req.body.stock,
@@ -135,25 +149,34 @@ exports.game_create_post = [
         );
 
         if (!errors.isEmpty()) {
-            Genre.find((err, results) => {
-                if (err) { return next(err) }
-
-                for (const genre of results) {
-                    if (game.genre.includes(genre._id)) {
-                        genre.checked = 'true';
+            async.parallel(
+                {
+                    genres(callback) {
+                        Genre.find(callback);
+                    },
+                    developers(callback) {
+                        Developer.find(callback);
                     }
+                },
+                (err, results) => {
+                    if (err) { return next(err) }
+
+                    for (const genre of results.genres) {
+                        if (game.genre.includes(genre._id)) {
+                            genre.checked = 'true';
+                        }
+                    }
+
+                    res.render('game_form', { title: 'Add Game', genres: results.genres, developers:results.developers, game, errors: errors.array() });
                 }
-
-                res.render('game_form', { title: 'Add Game', genres: results, game, errors: errors.array() });
-            });
+            );
             return;
-        } else {
-            game.save((err) => {
-                if (err) { return next(err) }
-
-                res.redirect(game.url);
-            });
         }
+        game.save((err) => {
+            if (err) { return next(err) }
+
+            res.redirect(game.url);
+        });
     }
 ];
 
@@ -183,11 +206,15 @@ exports.game_update_get = (req, res, next) => {
         game(callback) {
             Game.findById(req.params.id)
             .populate('genre')
+            .populate('developer')
             .exec(callback);
+        },
+        developers(callback) {
+            Developer.find(callback);
         },
         genres(callback) {
             Genre.find(callback);
-        }
+        },
     },
     (err, results) => {
         if (err) { return next(err) }
@@ -206,7 +233,7 @@ exports.game_update_get = (req, res, next) => {
             }
         }
 
-        res.render('game_form', { title: 'Update Game', game: results.game, genres: results.genres });
+        res.render('game_form', { title: 'Update Game', game: results.game, developers: results.developers, genres: results.genres });
     }
    );
 };
@@ -221,6 +248,11 @@ exports.game_update_post = [
 
     body('name', 'Name of game cannot be empty.')
     .trim() 
+    .isLength({ min:1 })
+    .escape(),
+
+    body('developer', 'Developer name cannot be empty.')
+    .trim()
     .isLength({ min:1 })
     .escape(),
 
@@ -245,6 +277,7 @@ exports.game_update_post = [
         const game = new Game(
             {
                 name: req.body.name,
+                developer: req.body.developer,
                 summary: req.body.summary,
                 genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
                 stock: req.body.stock,
@@ -255,24 +288,34 @@ exports.game_update_post = [
         );
 
         if (!errors.isEmpty()) {
-            Genre.find((err, results) => {
-                if (err) { return next(err) }
-
-                for (const genre of results) {
-                    if (game.genre.includes(genre._id)) {
-                        genre.checked = 'true';
+            async.parallel(
+                {
+                    genres(callback) {
+                        Genre.find(callback);
+                    },
+                    developers(callback) {
+                        Developer.find(callback);
                     }
+                },
+                (err, results) => {
+                    if (err) { return next(err) }
+
+                    for (const genre of results) {
+                        if (game.genre.includes(genre._id)) {
+                            genre.checked = 'true';
+                        }
+                    }
+
+                    res.render('game_form', { title: 'Add Game', genres: results.genres, developers:results.developers, game, errors: errors.array() });
                 }
-
-                res.render('game_form', { title: 'Add Game', genres: results, game, errors: errors.array() });
-            });
+            );
             return;
-        } else {
-            Game.findByIdAndUpdate(req.params.id, game, {}, (err, thegame) => {
-                if (err) { return next(err) }
-
-                res.redirect(thegame.url);
-            });
         }
+
+        Game.findByIdAndUpdate(req.params.id, game, {}, (err, thegame) => {
+            if (err) { return next(err) }
+
+            res.redirect(thegame.url);
+        });
     }
 ];

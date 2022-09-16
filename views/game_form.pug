@@ -10,7 +10,14 @@ block content
             input#title.input(type='text', placeholder='Name of Game', name='name' required='true' value=(undefined===game ? '' : game.name))
         .form 
             label(for='developer') Developer: 
-            input#title.input(type='text', placeholder='Developer of Game', name='developer' required='true' value=(undefined===game ? '' : game.developer))
+            select#developer.input(type='select' placehoolder='Select developer' name='developer' required='true')
+                - developers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB ? 1 : 0);});
+                for developer in developers 
+                    option(value=developer._id) #{developer.name}
+                    //- if game 
+                    //-     option(value=developer._id selected=(developer._id.toString()===game.developer._id.toString() ? 'selected' : false)) #{developer.name}
+                    //- else 
+                    //-     option(value=developer._id) #{developer.name}
         .form 
             label(for='summary') Summary: 
             - const value = (undefined===game ? '' : game.summary)

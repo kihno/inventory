@@ -6,7 +6,8 @@ block content
     
     h1= title
 
-    p #{game.developer}
+    p
+        a(href=game.developer.url) #{game.developer.name}
 
     p 
         each val, index in game.genre 
