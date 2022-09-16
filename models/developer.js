@@ -6,7 +6,7 @@ const DeveloperSchema = new Schema(
     {
         name: {type: String, required: true, maxLength: 100},
         country: {type: String, required: true, maxLength: 56},
-        image: {type: String}
+        logo: {type: String}
     }
 );
 

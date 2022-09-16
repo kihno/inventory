@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+
+    h1= title
+
+    div.devList
+        each dev in dev_list 
+            div.game
+                img(src=dev.image)
+                div.devName 
+                    a(href=dev.url) #{dev.name}
+                div.devDesc #{dev.description}
+                div.devPrice #{dev.price}
+
+        else 
+            p There are no developers in this store yet.

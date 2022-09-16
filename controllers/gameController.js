@@ -3,6 +3,7 @@ const Genre = require('../models/genre');
 
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const developer = require('../models/developer');
 
 // const multer = require('multer');
 
@@ -40,6 +41,9 @@ exports.index = (req, res, next) => {
             game_count(callback) {
                 Game.countDocuments({}, callback);
             },
+            developer_count(callback) {
+                developer.countDocuments({}, callback);
+            }
         },
         (err, results) => {
             res.render('index', {
@@ -65,6 +69,7 @@ exports.game_list = (req, res, next) => {
 exports.game_detail = (req, res, next) => {
     Game.findById(req.params.id)
     .populate('genre')
+    .populate('developer')
     .exec(function (err, results) {
         if (err) { return next(err) }
 

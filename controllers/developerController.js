@@ -11,7 +11,7 @@ exports.developer_list = (req, res) => {
     .exec(function (err, list_developers) {
         if (err) { return next(err) }
 
-        res.render('developer_list', { title: "Developers", developer_list: list_developers});
+        res.render('developer_list', { title: "Developers", dev_list: list_developers});
     });
 };
 
@@ -61,7 +61,7 @@ exports.developer_create_post = [
             {
                 name: req.body.name,
                 country: req.body.country,
-                image: req.body.image,
+                logo: req.body.logo,
             }
         );
 
@@ -75,7 +75,7 @@ exports.developer_create_post = [
                 if (found_developer) {
                     res.redirect(found_developer.url);
                 } else {
-                    Developer.save((err) => {
+                    developer.save((err) => {
                         if (err) { return next(err) }
 
                         res.redirect(developer.url);
@@ -167,7 +167,7 @@ exports.developer_update_post = [
             {
                 name: req.body.name,
                 country: req.body.country,
-                image: req.body.image,
+                logo: req.body.logo,
                 _id: req.params.id 
             }
         );

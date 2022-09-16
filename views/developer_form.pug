@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+
+    h1= title 
+    
+    form(method='POST' action='')
+        .form 
+            label(for='name') Name: 
+            input#title.input(type='text', placeholder='Name of Developer', name='name' required='true' value=(undefined===developer ? '' : developer.name))
+        .form 
+            label(for='country') Country: 
+            input#title.input(type='text', placeholder='Country of Game', name='country' required='true' value=(undefined===developer ? '' : developer.country))
+        .form 
+            label(for='logo') Logo: 
+            input(type='text' name='logo' placeholder='URL of logo' value=(undefined===game ? '' : game.logo))
+        button.submit(type='submit') Submit 
+
+    if errors 
+        ul 
+            for error in errors 
+                li!= error.msg

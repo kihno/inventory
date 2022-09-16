@@ -5,6 +5,9 @@ block content
     img(href=game.image)
     
     h1= title
+
+    p #{game.developer}
+
     p 
         each val, index in game.genre 
             a(href=val.url) #{val.name}

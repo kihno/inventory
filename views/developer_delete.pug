@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+
+    h1 #{title}: #{developer.name}
+
+    if developer_games.length 
+
+        p #[strong Delete the following games before attempting to delete this author.]
+
+            .gameList 
+
+                h4 Games 
+
+                ul 
+                each game in developer_games 
+                    li 
+                        a(href=game.url) #{game.name}
+
+    else
+
+        p Do you really want to delete this Developer?
+
+        form(method='POST' action='')
+            .form
+                input#gameid.input(type='hidden' name='developerid' required='true' value=developer._id)
+            button.submit(type='submit') Delete

@@ -1,0 +1,24 @@
+extends layout 
+
+block content 
+
+    img(src=developer.logo)
+    
+    h1 #{developer.name}
+
+    p #{developer.country}
+
+    .detailList 
+
+        h4 Games 
+
+        ul 
+        each game in developer_games 
+            li 
+                a(href=game.url) #{game.name}
+
+    hr
+    p 
+        a(href=developer.url+'/update') Update Developer
+    p 
+        a(href=developer.url+'/delete') Delete Developer
