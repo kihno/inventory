@@ -11,7 +11,7 @@ block content
                 div.gameName 
                     a(href=game.url) #{game.name}
                 div.gameDesc #{game.description}
-                div.gamePrice #{game.price}
+                div.gamePrice $#{game.price}
 
         else 
             p There are no games available.

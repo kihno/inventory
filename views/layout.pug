@@ -6,25 +6,33 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div.navbar
-      block navbar 
-        ul.navLinks 
-          li 
-            a(href='/catalog') Home  
-          li 
-            a(href='/catalog/games') All Games 
-          li 
-            a(href='/catalog/developers') All Developers
-          li 
-            a(href='/catalog/genres') All Genres
-          li
-            hr 
-          li 
-            a(href='/catalog/game/create') Add New Game 
-          li 
-            a(href='/catalog/developer/create') Add New Developer
-          li 
-            a(href='/catalog/genre/create') Add New Genre
+    div.main
+      div.navbar
+        block navbar 
+          ul.navLinks 
+            li 
+              a(href='/catalog') Home  
+            li 
+              a(href='/catalog/games') Games 
+            li 
+              a(href='/catalog/developers') Developers
+            li 
+              a(href='/catalog/genres') Genres
 
-    div.content
-      block content
+      div.sidebar
+        block sidebar 
+          ul.sidebarLinks
+            li 
+              a(href='/catalog/game/create') Add New Game 
+            li 
+              a(href='/catalog/developer/create') Add New Developer
+            li 
+              a(href='/catalog/genre/create') Add New Genre
+
+      div.content
+        block content
+
+      div.footer
+        block footer 
+          p created by 
+            a(href='https://github.com/kihno') Kihno

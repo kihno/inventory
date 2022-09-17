@@ -2,12 +2,13 @@ extends layout
 
 block content 
 
-    img(href=game.image)
+    img(src=game.image)
     
     h1= title
 
-    p
-        a(href=game.developer.url) #{game.developer.name}
+    if game.developer
+        p
+            a(href=game.developer.url) #{game.developer.name}
 
     p 
         each val, index in game.genre 
@@ -18,7 +19,7 @@ block content
     p #{game.summary}
 
     p Stock: #{game.stock}
-    p #[strong Price:] #{game.price}
+    p #[strong Price:] $#{game.price}
 
     hr
     p 
