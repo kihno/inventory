@@ -6,12 +6,8 @@ block content
 
     div.devList
         each dev in dev_list 
-            div.game
-                img(src=dev.image)
-                div.devName 
-                    a(href=dev.url) #{dev.name}
-                div.devDesc #{dev.description}
-                div.devPrice #{dev.price}
+            a(href=dev.url): img.dev(src=dev.logo)
+
 
         else 
             p There are no developers in this store yet.

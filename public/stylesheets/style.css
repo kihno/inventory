@@ -4,6 +4,10 @@ body {
   height: 100%;
 }
 
+.logo {
+  width: 140px;
+}
+
 .main {
   min-height: 100vh;
   display: grid;
@@ -27,6 +31,9 @@ ul {
 
 .navbar {
   grid-area: header;
+  padding: 20px;
+  display: flex;
+  align-items: center;
   background-color: black;
   color: white;
 }
@@ -50,9 +57,24 @@ ul {
 }
 
 .content {
+  padding-left: 40px;
   grid-area: content;
   background-color: #c1bed1;
   color: #069330;
+}
+
+.gameList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.devList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.dev {
+  width: 200px;
 }
 
 .footer {

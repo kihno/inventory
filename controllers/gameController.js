@@ -113,12 +113,16 @@ exports.game_create_post = [
     body('name', 'Name of game cannot be empty.')
     .trim() 
     .isLength({ min:1 })
+    .blacklist('<>'),
+
+    body('developer', 'Select developer')
+    .trim()
     .escape(),
 
     body('summary', 'Summary of game cannot be empty.')
     .trim() 
     .isLength({ min:1 })
-    .escape(),
+    .blacklist('<>'),
 
     body('stock', 'Please include how many game copies are in stock.')
     .trim() 
@@ -249,17 +253,16 @@ exports.game_update_post = [
     body('name', 'Name of game cannot be empty.')
     .trim() 
     .isLength({ min:1 })
-    .escape(),
+    .blacklist('<>'),
 
     body('developer', 'Developer name cannot be empty.')
     .trim()
-    .isLength({ min:1 })
     .escape(),
 
     body('summary', 'Summary of game cannot be empty.')
     .trim() 
     .isLength({ min:1 })
-    .escape(),
+    .blacklist('<>'),
 
     body('stock', 'Please include how many game copies are in stock.')
     .trim() 
