@@ -40,7 +40,7 @@ exports.developer_detail = (req, res, next) => {
 };
 
 exports.developer_create_get = (req, res) => {
-    res.render('developer_form', { title: 'Add New Developer' });
+    res.render('developer_form', { title: 'Add Developer' });
 };
 
 exports.developer_create_post = [
@@ -66,7 +66,7 @@ exports.developer_create_post = [
         );
 
         if (!errors.isEmpty()) {
-            res.render('developer_form', { title: 'Create Developer', developer, errors: errors.array() });
+            res.render('developer_form', { title: 'Add Developer', developer, errors: errors.array() });
             return;
         } else {
             Developer.findOne({ name: req.body.name }).exec((err, found_developer) => {

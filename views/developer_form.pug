@@ -5,13 +5,13 @@ block content
     h1= title 
     
     form(method='POST' action='')
-        .form 
+        .form-group 
             label(for='name') Name: 
             input#title.input(type='text', placeholder='Name of Developer', name='name' required='true' value=(undefined===developer ? '' : developer.name))
-        .form 
+        .form-group 
             label(for='country') Country: 
             input#title.input(type='text', placeholder='Country of Developer', name='country' required='true' value=(undefined===developer ? '' : developer.country))
-        .form 
+        .form-group 
             label(for='logo') Logo: 
             input(type='text' name='logo' placeholder='URL of company logo' value=(undefined===developer ? '' : developer.logo))
         button.submit(type='submit') Submit 

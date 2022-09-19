@@ -5,7 +5,7 @@ block content
     h1= title 
 
     form(method='POST' action='')
-        .form 
+        .form-group
             label(for='name') Genre:
             input#name.input(type='text', placeholder='FPS, Puzzle etc.', name='name', value=(undefined===genre ? '' : genre.name))
         button.submit(type='submit') Submit 

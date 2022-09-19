@@ -2,10 +2,28 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #011da9;
+  list-style: none;
+  font-weight: bold;
 }
 
 .logo {
   width: 140px;
+}
+
+.add {
+  width: 150px;
+  height: 50px;
+  background-color: #ffc001;
+  color: #069330;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 .main {
@@ -19,12 +37,6 @@ body {
     "footer footer"
 }
 
-a {
-  color: white;
-  list-style: none;
-  font-weight: bold;
-}
-
 ul {
   list-style: none;
 }
@@ -35,46 +47,165 @@ ul {
   display: flex;
   align-items: center;
   background-color: black;
-  color: white;
 }
 
 .navbar>ul {
   display: flex;
   gap: 20px;
-  
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.navLinks>li:hover {
+  transform: scale(1.04);
+}
+
+.link:hover {
+  color: #ffc001;
 }
 
 .sidebar {
   grid-area: sidebar;
   background-color: #e10916;
   color: white;
+  padding: 20px;
 }
 
 .sidebar>ul {
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 
 .content {
-  padding-left: 40px;
+  padding: 0 40px 40px 40px;
   grid-area: content;
   background-color: #c1bed1;
-  color: #069330;
 }
 
 .gameList {
   display: grid;
+  gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.game {
+  width: 274px;
+  height: 362px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameImage {
+  border-radius: 20px;
+}
+
+.gameImage:hover {
+  border: 6px solid #ffc001;
+  transform: scale(1.03);
 }
 
 .devList {
   display: grid;
+  gap: 20px;
+  align-items: center;
+  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .dev {
-  width: 200px;
+  max-width: 200px;
+  max-height: 130px;
+}
+
+.dev:hover {
+  transform: scale(1.03);
+}
+
+.gameHeader {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.gameInfo>h1 {
+  margin: 0;
+}
+
+.btn {
+  text-decoration: none;
+  margin: 2px;
+}
+
+.btn>div:hover {
+  transform: scale(1.03);
+}
+
+.update, .delete {
+  width: 110px;
+  height: 30px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: white;
+}
+
+.update {
+  background-color: #069330;
+}
+
+.delete {
+  background-color: #e10916;
+}
+
+form {
+  background-color: white;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px;
+}
+
+.submit {
+  background-color: #011da9;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.submit:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.genreList {
+  padding: 0;
+}
+
+.genre {
+  margin: 5px;
+}
+
+.error {
+  color: #e10916;
 }
 
 .footer {
@@ -83,4 +214,8 @@ ul {
   text-align: center;
   background-color: #011da9;
   color: #ffc001;
+}
+
+.git {
+  color: white;
 }

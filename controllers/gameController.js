@@ -63,7 +63,7 @@ exports.game_list = (req, res, next) => {
     .exec(function (err, list_games) {
         if (err) { return next(err) }
 
-        res.render('game_list', { title: "Game List", game_list: list_games});
+        res.render('game_list', { title: "All Games", game_list: list_games});
     });
 };
 

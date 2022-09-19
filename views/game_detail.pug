@@ -2,28 +2,32 @@ extends layout
 
 block content 
 
-    img(src=game.image)
+    .gameHeader
+
+        img(src=game.image)
+
+        .gameInfo
     
-    h1= title
+            h1= title
 
-    if game.developer
-        p
-            a(href=game.developer.url) #{game.developer.name}
+            p #[strong Genres: ]
+                each val, index in game.genre 
+                    a(href=val.url) #{val.name}
+                    if (index < game.genre.length - 1)
+                    |, 
+        
+            if game.developer
+                p #[strong Publisher: ]
+                    a(href=game.developer.url) #{game.developer.name}
 
-    p 
-        each val, index in game.genre 
-            a(href=val.url) #{val.name}
-            if (index < game.genre.length - 1)
-            |, 
-
+            
     p #{game.summary}
 
-    p Stock: #{game.stock}
+    p #[strong Stock:] #{game.stock}
     p #[strong Price:] $#{game.price}
 
     hr
-    p 
-        a(href=game.url+'/update') Update Game
-    p 
-        a(href=game.url+'/delete') Delete Game
+    a.btn(href=game.url+'/update'): div.update Update Game
+
+    a.btn(href=game.url+'/delete'): div.delete Delete Game
 

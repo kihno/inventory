@@ -5,10 +5,10 @@ block content
     h1= title 
     
     form(method='POST' action='')
-        .form 
+        .form-group 
             label(for='name') Name: 
             input#title.input(type='text', placeholder='Name of Game', name='name' required='true' value=(undefined===game ? '' : game.name))
-        .form 
+        .form-group 
             label(for='developer') Developer: 
             select#developer.input(type='select' name='developer' required='true')
                 - developers.sort(function(a,b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB ? 1 : 0);});
@@ -18,24 +18,24 @@ block content
                         option(value=developer._id selected=(developer._id.toString()===game.developer._id.toString() ? 'selected' : false)) #{developer.name}
                     else 
                         option(value=developer._id) #{developer.name}
-        .form 
+        .form-group 
             label(for='summary') Summary: 
             - const value = (undefined===game ? '' : game.summary)
             textarea#title.input(placeholder='Summary of Game', name='summary' required='true') #{value}
-        .form 
+        .form-group 
             label Genre: 
             div 
                 for genre in genres 
                     div 
                         input.checkbox(type='checkbox' name='genre' id=genre._id value=genre._id checked=genre.checked)
                         label(for=genre._id) #{genre.name}
-        .form
+        .form-group
             label(for='price') Price: 
             input#title.input(type='text', placeholder='Price of Game', name='price' required='true' value=(undefined===game ? '' : game.price))
-        .form 
+        .form-group 
             label(for='stock') Stock: 
             input#title.input(type='number', placeholder='Number of copies in stock', name='stock' required='true' value=(undefined===game ? '' : game.stock))
-        .form 
+        .form-group 
             label(for='image') Image: 
             input(type='text' name='image' placeholder='URL of image' value=(undefined===game ? '' : game.image))
         button.submit(type='submit') Submit 

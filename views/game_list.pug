@@ -7,11 +7,8 @@ block content
     div.gameList
         each game in game_list 
             div.game
-                img(src=game.image)
-                div.gameName 
-                    a(href=game.url) #{game.name}
-                div.gameDesc #{game.description}
-                div.gamePrice $#{game.price}
+                a(href=game.url): img.gameImage(src=game.image)
+                
 
         else 
             p There are no games available.

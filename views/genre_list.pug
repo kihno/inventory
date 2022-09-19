@@ -4,9 +4,9 @@ block content
 
     h1= title 
 
-    ul 
+    ul.genreList 
         each genre in genre_list 
-            li 
+            li.genre 
                 a(href=genre.url) #{genre.name}
 
         else 

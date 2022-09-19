@@ -39,7 +39,7 @@ exports.genre_detail = (req, res, next) => {
 };
 
 exports.genre_create_get = (req, res) => {
-    res.render('genre_form', { title: 'Create Genre' });
+    res.render('genre_form', { title: 'Add Genre' });
 };
 
 exports.genre_create_post = [
@@ -54,7 +54,7 @@ exports.genre_create_post = [
         const genre = new Genre({ name: req.body.name });
 
         if (!errors.isEmpty()) {
-            res.render('genre_form', { title: 'Create Genre', genre, errors: errors.array() });
+            res.render('genre_form', { title: 'Add Genre', genre, errors: errors.array() });
             return;
         } else {
             Genre.findOne({ name: req.body.name }).exec((err, found_genre) => {
@@ -71,6 +71,32 @@ exports.genre_create_post = [
                 }
             });
         }
+    }
+];
+
+exports.genre_secret_get = (req, res, next) => {
+    res.render('secret', { title: 'Secret Password' });
+}
+
+exports.genre_secret_post = [
+    body('password', 'Password incorrect')
+    .trim()
+    .isLength({ min:1 })
+    .custom(val => {
+        if (val.toLowerCase() === 'toadstool') return true;
+        return false;
+    })
+    .escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            res.render('secret', { title: 'Secret Password', errors: errors.array() });
+            return;
+        } 
+
+        res.redirect(`/catalog/genre/${req.params.id}/delete`)
     }
 ];
 

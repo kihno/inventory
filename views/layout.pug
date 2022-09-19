@@ -13,23 +13,23 @@ html(lang='en')
           a(href='/catalog'): img.logo(src='/images/n64-store.png')
           ul.navLinks 
             li 
-              a(href='/catalog') Home  
+              a(href='/catalog').link Home  
             li 
-              a(href='/catalog/games') Games 
+              a(href='/catalog/games').link Games 
             li 
-              a(href='/catalog/developers') Developers
+              a(href='/catalog/developers').link Developers
             li 
-              a(href='/catalog/genres') Genres
+              a(href='/catalog/genres').link Genres
 
       div.sidebar
         block sidebar 
           ul.sidebarLinks
             li 
-              a(href='/catalog/game/create') Add New Game 
+              a.btn(href='/catalog/game/create'): .add Add Game 
             li 
-              a(href='/catalog/developer/create') Add New Developer
+              a.btn(href='/catalog/developer/create'): .add Add Developer
             li 
-              a(href='/catalog/genre/create') Add New Genre
+              a.btn(href='/catalog/genre/create'): .add Add Genre
 
       div.content
         block content
@@ -37,4 +37,4 @@ html(lang='en')
       div.footer
         block footer 
           p created by 
-            a(href='https://github.com/kihno') Kihno
+            a(href='https://github.com/kihno').git Kihno
