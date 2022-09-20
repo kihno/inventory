@@ -184,6 +184,32 @@ exports.game_create_post = [
     }
 ];
 
+exports.game_secret_get = (req, res, next) => {
+    res.render('secret', { title: 'Secret Password' });
+}
+
+exports.game_secret_post = [
+    body('password', 'Password incorrect')
+    .trim()
+    .isLength({ min:1 })
+    .custom(val => {
+        if (val.toLowerCase() === 'toadstool') return true;
+        return false;
+    })
+    .escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            res.render('secret', { title: 'Secret Password', errors: errors.array() });
+            return;
+        } 
+
+        res.redirect(`/catalog/game/${req.params.id}/delete`)
+    }
+];
+
 exports.game_delete_get = (req, res, next) => {
     Game.findById(req.params.id).exec((err, results) => {
         if (err) { return next(err) }

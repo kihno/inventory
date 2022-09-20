@@ -7,7 +7,6 @@ body {
 
 a {
   color: #011da9;
-  list-style: none;
   font-weight: bold;
 }
 
@@ -35,10 +34,6 @@ a {
     "header header"
     "sidebar content"
     "footer footer"
-}
-
-ul {
-  list-style: none;
 }
 
 .navbar {
@@ -74,7 +69,8 @@ ul {
   padding: 20px;
 }
 
-.sidebar>ul {
+.sidebarLinks {
+  list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
@@ -89,7 +85,7 @@ ul {
   background-color: #c1bed1;
 }
 
-.gameList {
+.gameGrid {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

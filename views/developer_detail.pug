@@ -18,7 +18,6 @@ block content
                 a(href=game.url) #{game.name}
 
     hr
-    p 
-        a(href=developer.url+'/update') Update Developer
-    p 
-        a(href=developer.url+'/delete') Delete Developer
+    a.btn(href=developer.url+'/update'): div.update Update Dev
+
+    a.btn(href=developer.url+'/secret'): div.delete Delete Dev

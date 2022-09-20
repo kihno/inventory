@@ -23,6 +23,10 @@ router.get('/game/:id/update', game_controller.game_update_get);
 
 router.post('/game/:id/update', game_controller.game_update_post);
 
+router.get('/game/:id/secret', game_controller.game_secret_get);
+
+router.post('/game/:id/secret', game_controller.game_secret_post);
+
 router.get('/game/:id', game_controller.game_detail);
 
 router.get('/games', game_controller.game_list);
@@ -39,6 +43,10 @@ router.post('/developer/:id/delete', developer_controller.developer_delete_post)
 router.get('/developer/:id/update', developer_controller.developer_update_get);
 
 router.post('/developer/:id/update', developer_controller.developer_update_post);
+
+router.get('/developer/:id/secret', developer_controller.developer_secret_get);
+
+router.post('/developer/:id/secret', developer_controller.developer_secret_post);
 
 router.get('/developer/:id', developer_controller.developer_detail);
 

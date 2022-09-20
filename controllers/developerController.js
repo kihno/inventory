@@ -86,6 +86,32 @@ exports.developer_create_post = [
     }
 ];
 
+exports.developer_secret_get = (req, res, next) => {
+    res.render('secret', { title: 'Secret Password' });
+}
+
+exports.developer_secret_post = [
+    body('password', 'Password incorrect')
+    .trim()
+    .isLength({ min:1 })
+    .custom(val => {
+        if (val.toLowerCase() === 'toadstool') return true;
+        return false;
+    })
+    .escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            res.render('secret', { title: 'Secret Password', errors: errors.array() });
+            return;
+        } 
+
+        res.redirect(`/catalog/developer/${req.params.id}/delete`)
+    }
+];
+
 exports.developer_delete_get = (req, res, next) => {
     async.parallel(
         {

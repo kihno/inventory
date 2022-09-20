@@ -10,15 +10,14 @@ block content
 
         div.genreGames
             each game in genre_games 
-                div.genreGame
-                    img(src=game.image)
-                    a(href=game.url) #{game.name}
+                ul.genreGame
+                    li
+                        a(href=game.url) #{game.name}
 
             else
                 p There are no games in this genre yet.
 
     hr
-    p 
-        a(href=genre.url+'/update') Update Genre
-    p 
-        a(href=genre.url+'/secret') Delete Genre
+    a.btn(href=genre.url+'/update'): div.update Update Genre
+
+    a.btn(href=genre.url+'/secret'): div.delete Delete Genre
