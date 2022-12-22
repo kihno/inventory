@@ -2,7 +2,7 @@
 
 ![](public/images/thumbnail.png)
 
-https://n65-store.onrender.com/
+https://n64-store.onrender.com/
 
 ## Description
 
